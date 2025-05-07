@@ -46,19 +46,23 @@ class Recipe(models.Model):
     title = models.CharField(
         max_length=128, help_text="Enter the title of the recipe")
 
-    prep_time = models.IntegerField(help_text="Enter the minutes of prep time")
+    prep_time = models.IntegerField(
+        help_text="Enter the minutes of prep time", default=0)
 
-    cook_time = models.IntegerField(help_text="Enter the minutes of cook time")
+    cook_time = models.IntegerField(
+        help_text="Enter the minutes of cook time", default=0)
 
-    servings = models.IntegerField(help_text="Enter the number of servings")
+    servings = models.CharField(max_length=32,
+                                help_text="Enter the number of servings", default="")
 
-    tag = models.ManyToManyField(Tag, help_text="Select a tag for this recipe")
+    tag = models.ManyToManyField(
+        Tag, help_text="Select a tag for this recipe", default=[])
 
     instructions = models.ManyToManyField(
-        Instruction, help_text="Select instructions for this recipe")
+        Instruction, help_text="Select instructions for this recipe", default=[])
 
     ingredients = models.ManyToManyField(
-        Ingredient, help_text="Select ingredients for this recipe")
+        Ingredient, help_text="Select ingredients for this recipe", default=[])
 
     url = models.CharField(
         max_length=2000, help_text="The original recipe URL", null=True, blank=True)

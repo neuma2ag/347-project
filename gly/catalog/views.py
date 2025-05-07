@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views import generic
 
 from .models import Tag, Recipe
+from .forms import ImportRecipeForm
+
 
 def index(request):
     num_tags = Tag.objects.all().count()
@@ -19,3 +21,17 @@ def index(request):
 
 class RecipeDetailView(generic.DetailView):
     model = Recipe
+
+
+def import_recipe(request):
+    if request.method == 'POST':
+        form = ImportRecipeForm(request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+    else:
+        form = ImportRecipeForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'catalog/recipe_import.html', context=context)
