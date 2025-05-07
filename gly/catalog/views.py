@@ -1,9 +1,7 @@
 from django.shortcuts import render
+from django.views import generic
 
 from .models import Tag, Recipe
-
-# Create your views here.
-
 
 def index(request):
     num_tags = Tag.objects.all().count()
@@ -17,3 +15,7 @@ def index(request):
     }
 
     return render(request, 'index.html', context=context)
+
+
+class RecipeDetailView(generic.DetailView):
+    model = Recipe

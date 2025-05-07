@@ -14,7 +14,7 @@
 {% if recipes %}
 <ul>
     {% for recipe in recipes %}
-    <a href="{% url 'index' %}" <li>
+    <a href="{{ recipe.get_absolute_url }}" <li>
         <p>{{ recipe }}</p>
         {% if recipe.tag %}
         <ul>

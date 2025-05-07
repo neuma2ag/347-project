@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>{{recipe}}</h1>
+<p>Prep time: {{ recipe.prep_time }}</p>
+<p>Cook time: {{ recipe.cook_time }}</p>
+<p>Servings: {{ recipe.servings }}</p>
+
+{% if recipe.tag %}
+<ul>
+    {% for tag in recipe.tag.all %}
+    <li>{{ tag}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h2>Ingredients</h2>
+<ul>
+{% for ingredient in recipe.ingredients.all %}
+<li>{{ ingredient }}</li>
+{% endfor %}
+</ul>
+
+<h2>Instructions</h2>
+<ol>
+{% for instruction in recipe.instructions.all %}
+<li>{{ instruction }}</li>
+{% endfor %}
+</ol>
+
+<p>
+{% if recipe.url %}
+<a href="{{ recipe.url }}">
+    Original URL
+</a>
+{% else %}
+No URL
+{% endif %}
+</p>
+
+{% endblock %}
