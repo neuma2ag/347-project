@@ -1,16 +1,34 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Gordon Loves You!</h1>
-  <p>
-    Welcome to LocalLibrary, a website developed by
+<h1>Gordon Loves You!</h1>
+<p>
+    Welcome to Gordon Loves You, a website developed by
     <em>Andrew Gregory Neumann</em>!
-  </p>
-  <h2>Dynamic content</h2>
-  <p>The library has the following record counts:</p>
-  <ul>
+</p>
+<h2>GLY statistics</h2>
+<ul>
     <li><strong>Recipes:</strong> {{ num_recipes }}</li>
     <li><strong>Tags:</strong> {{ num_tags }}</li>
-  </ul>
+</ul>
+{% if recipes %}
+<ul>
+    {% for recipe in recipes %}
+    <a href="{% url 'index' %}" <li>
+        <p>{{ recipe }}</p>
+        {% if recipe.tag %}
+        <ul>
+            {% for tag in recipe.tag.all %}
+            <p>{{ tag }}</p>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        </li>
+    </a>
+    {% endfor %}
+</ul>
+{% else %}
+<p>There are currently no recipes in the program.
+</p>
+{% endif %}
 {% endblock %}
-
