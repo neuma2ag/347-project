@@ -3,12 +3,14 @@ from django.core.exceptions import ValidationError
 from recipe_scrapers import scrape_me
 from recipe_scrapers import WebsiteNotImplementedError
 
-from .models import Recipe, Instruction, Ingredient
+from .models import Recipe, Instruction, Ingredient, Tag
 
 
 class ImportRecipeForm(forms.Form):
     url = forms.URLField(
         max_length=2000, help_text="Enter the URL of the recipe to import")
+    tag_text = forms.CharField(
+        max_length=256, help_text="Enter a comma-separated list of tags", required=False)
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -36,6 +38,23 @@ class ImportRecipeForm(forms.Form):
 
         if scraper.yields():
             cleaned_data['servings'] = scraper.yields()
+
+        tag_text = cleaned_data['tag_text']
+        if not tag_text:
+            tag_text = ''
+        tag_texts = [x.strip() for x in cleaned_data['tag_text'].split(',')]
+        tag_texts = [x for x in tag_texts if x]
+        tags = []
+        for name in tag_texts:
+            existing_tag = Tag.objects.filter(name=name).first()
+            if existing_tag:
+                tag = existing_tag
+            else:
+                tag = Tag()
+                tag.name = name
+                tag.save()
+            tags.append(tag)
+        cleaned_data['tags'] = tags
 
         instructions = []
         for content in scraper.instructions_list():
@@ -69,4 +88,5 @@ class ImportRecipeForm(forms.Form):
         recipe.save()
         recipe.instructions.set(cleaned_data['instructions'])
         recipe.ingredients.set(cleaned_data['ingredients'])
+        recipe.tag.set(cleaned_data['tags'])
         return recipe
