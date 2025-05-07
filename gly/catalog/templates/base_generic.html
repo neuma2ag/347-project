@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     {% block title %}
-      <title>Local Library</title>
+      <title>Gordon Loves You</title>
     {% endblock %}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,6 +21,7 @@
           {% block sidebar %}
             <ul class="sidebar-nav">
               <li><a href="{% url 'index' %}">Home</a></li>
+              <li><a href="{% url 'recipe-import' %}">Import recipe</a></li>
               <li><a href="">All tags</a></li>
             </ul>
           {% endblock %}
