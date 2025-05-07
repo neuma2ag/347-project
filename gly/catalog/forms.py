@@ -56,22 +56,8 @@ class ImportRecipeForm(forms.Form):
             tags.append(tag)
         cleaned_data['tags'] = tags
 
-        instructions = []
-        for content in scraper.instructions_list():
-            instruction = Instruction()
-            instruction.content = content
-            instruction.save()
-            instructions.append(instruction)
-        cleaned_data['instructions'] = instructions
-
-        ingredients = []
-        for content in scraper.ingredients():
-            ingredient = Ingredient()
-            ingredient.content = content
-            ingredient.save()
-            ingredients.append(ingredient)
-        cleaned_data['ingredients'] = ingredients
-
+        cleaned_data['instructions'] = scraper.instructions_list()
+        cleaned_data['ingredients'] = scraper.ingredients()
         cleaned_data['creator'] = self.user
 
         return cleaned_data
@@ -86,7 +72,12 @@ class ImportRecipeForm(forms.Form):
         recipe.url = cleaned_data['url']
         recipe.creator = cleaned_data['creator']
         recipe.save()
-        recipe.instructions.set(cleaned_data['instructions'])
-        recipe.ingredients.set(cleaned_data['ingredients'])
+        for i, instruction in enumerate(cleaned_data['instructions']):
+            instruction = Instruction(
+                content=instruction, recipe=recipe, step=i)
+            instruction.save()
+        for ingredient in cleaned_data['ingredients']:
+            ingredient = Ingredient(content=ingredient, recipe=recipe)
+            ingredient.save()
         recipe.tag.set(cleaned_data['tags'])
         return recipe

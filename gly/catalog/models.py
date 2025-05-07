@@ -26,22 +26,6 @@ class Tag(models.Model):
         ]
 
 
-class Instruction(models.Model):
-    content = models.CharField(
-        max_length=256, help_text="Enter the text for the instruction")
-
-    def __str__(self):
-        return self.content
-
-
-class Ingredient(models.Model):
-    content = models.CharField(
-        max_length=256, help_text="Enter the text for the ingredient")
-
-    def __str__(self):
-        return self.content
-
-
 class Recipe(models.Model):
     title = models.CharField(
         max_length=128, help_text="Enter the title of the recipe")
@@ -58,12 +42,6 @@ class Recipe(models.Model):
     tag = models.ManyToManyField(
         Tag, help_text="Select a tag for this recipe", default=[])
 
-    instructions = models.ManyToManyField(
-        Instruction, help_text="Select instructions for this recipe", default=[])
-
-    ingredients = models.ManyToManyField(
-        Ingredient, help_text="Select ingredients for this recipe", default=[])
-
     url = models.CharField(
         max_length=2000, help_text="The original recipe URL", null=True, blank=True)
 
@@ -75,3 +53,24 @@ class Recipe(models.Model):
 
     def get_absolute_url(self):
         return reverse('recipe-detail', args=[str(self.id)])
+
+
+class Instruction(models.Model):
+    content = models.CharField(
+        max_length=256, help_text="Enter the text for the instruction")
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE, related_name='instructions')
+    step = models.IntegerField(help_text="Enter the step number")
+
+    def __str__(self):
+        return self.content
+
+
+class Ingredient(models.Model):
+    content = models.CharField(
+        max_length=256, help_text="Enter the text for the ingredient")
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE, related_name='ingredients')
+
+    def __str__(self):
+        return self.content
