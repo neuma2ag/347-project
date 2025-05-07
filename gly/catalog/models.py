@@ -37,6 +37,12 @@ class Recipe(models.Model):
 
     tag = models.ManyToManyField(Tag, help_text="Select a tag for this recipe")
 
+    instructions = models.JSONField(
+        default=[], help_text="Enter a list of instructions as JSON list of strings")
+
+    ingredients = models.JSONField(
+        default=[], help_text="Enter a list of ingredients as a JSON list of strings")
+
     def __str__(self):
         return self.title
 
