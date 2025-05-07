@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Gordon Loves You!</h1>
+  <p>
+    Welcome to LocalLibrary, a website developed by
+    <em>Andrew Gregory Neumann</em>!
+  </p>
+  <h2>Dynamic content</h2>
+  <p>The library has the following record counts:</p>
+  <ul>
+    <li><strong>Recipes:</strong> {{ num_recipes }}</li>
+    <li><strong>Tags:</strong> {{ num_tags }}</li>
+  </ul>
+{% endblock %}
+
