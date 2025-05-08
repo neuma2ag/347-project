@@ -62,3 +62,13 @@ class TagDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['recipes'] = Recipe.objects.filter(tag=self.object)
         return context
+
+
+class TagUpdateView(generic.UpdateView):
+    model = Tag
+    fields = '__all__'
+
+
+class TagDeleteView(generic.DeleteView):
+    model = Tag
+    success_url = '/catalog/tags'

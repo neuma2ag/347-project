@@ -21,7 +21,8 @@ class Tag(models.Model):
     name = models.CharField(max_length=32, unique=True,
                             help_text="Enter a tag for recipes")
 
-    color = models.CharField(max_length=7, default=random_color)
+    color = models.CharField(max_length=7, default=random_color,
+                             help_text="Enter a color to associate with the tag")
 
     def __str__(self):
         return self.name

@@ -2,6 +2,9 @@
 
 {% block content %}
 <h1 class="text-4xl">Tag: {{tag}}</h1>
+<button class="mt-4 bg-red-500 p-1"><a href="{% url 'tag-delete' pk=tag.pk %}">Delete</a></button>
+<button class="mt-4 bg-green-500 p-1"><a href="{% url 'tag-update' pk=tag.pk %}">Update</a></button>
+
 <ul class="mt-4 grid grid-cols-3 gap-4">
 {% for recipe in recipes %}
 <a href="{{ recipe.get_absolute_url }}"
