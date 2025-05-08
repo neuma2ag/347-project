@@ -30,14 +30,11 @@ class ImportRecipeForm(forms.Form):
                 "This website failed to provide a title for the recipe")
         cleaned_data['title'] = scraper.title()
 
-        if scraper.prep_time():
-            cleaned_data['prep_time'] = scraper.prep_time()
+        cleaned_data['prep_time'] = scraper.prep_time() or 0
 
-        if scraper.cook_time():
-            cleaned_data['cook_time'] = scraper.cook_time()
+        cleaned_data['cook_time'] = scraper.cook_time() or 0
 
-        if scraper.yields():
-            cleaned_data['servings'] = scraper.yields()
+        cleaned_data['servings'] = scraper.yields() or ""
 
         tag_text = cleaned_data['tag_text']
         if not tag_text:
@@ -56,8 +53,8 @@ class ImportRecipeForm(forms.Form):
             tags.append(tag)
         cleaned_data['tags'] = tags
 
-        cleaned_data['instructions'] = scraper.instructions_list()
-        cleaned_data['ingredients'] = scraper.ingredients()
+        cleaned_data['instructions'] = scraper.instructions_list() or []
+        cleaned_data['ingredients'] = scraper.ingredients() or []
         cleaned_data['creator'] = self.user
 
         image_url = None
@@ -75,7 +72,8 @@ class ImportRecipeForm(forms.Form):
         recipe.cook_time = cleaned_data['cook_time']
         recipe.servings = cleaned_data['servings']
         recipe.url = cleaned_data['url']
-        recipe.creator = cleaned_data['creator']
+        if str(cleaned_data['creator']) != "AnonymousUser":
+            recipe.creator = cleaned_data['creator']
         recipe.save()
         for i, instruction in enumerate(cleaned_data['instructions']):
             instruction = Instruction(

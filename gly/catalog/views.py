@@ -26,6 +26,7 @@ class RecipeDetailView(generic.DetailView):
 def import_recipe(request):
     if request.method == 'POST':
         form = ImportRecipeForm(request.POST, user=request.user)
+        print(request.user)
         if form.is_valid():
             recipe = form.save()
             return redirect(recipe.get_absolute_url())
