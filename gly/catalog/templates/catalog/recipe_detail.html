@@ -1,29 +1,34 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1>{{recipe}}</h1>
-<p>Creator: {{ recipe.creator }}</p>
-<p>Prep time: {{ recipe.prep_time }}</p>
-<p>Cook time: {{ recipe.cook_time }}</p>
-<p>Servings: {{ recipe.servings }}</p>
+<div class="grid grid-cols-2">
+    <div>
+        <h1 class="text-4xl">{{recipe}}</h1>
+        <p>Creator: {{ recipe.creator }}</p>
+        <p>Prep time: {{ recipe.prep_time }}</p>
+        <p>Cook time: {{ recipe.cook_time }}</p>
+        <p>Servings: {{ recipe.servings }}</p>
+        {% if recipe.tag %}
+        <ul class="flex gap-2">
+            {% for tag in recipe.tag.all %}
+            <li class="px-4 text-center" style="background-color: {{ tag.color }}">{{ tag }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <img src="{{ recipe.picture.url}}" />
+</div>
 
-{% if recipe.tag %}
-<ul>
-    {% for tag in recipe.tag.all %}
-    <li>{{ tag}}</li>
-    {% endfor %}
-</ul>
-{% endif %}
 
-<h2>Ingredients</h2>
-<ul>
+<h2 class="text-3xl mt-4">Ingredients</h2>
+<ul class="list-disc">
 {% for ingredient in recipe.ingredients.all %}
 <li>{{ ingredient }}</li>
 {% endfor %}
 </ul>
 
-<h2>Instructions</h2>
-<ol>
+<h2 class="text-3xl mt-4">Instructions</h2>
+<ol class="list-decimal">
 {% for instruction in recipe.instructions.all %}
 <li>{{ instruction }}</li>
 {% endfor %}
