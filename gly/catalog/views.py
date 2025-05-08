@@ -53,3 +53,12 @@ def tags(request):
         'tags': Tag.objects.all()
     }
     return render(request, 'catalog/tags.html', context=context)
+
+
+class TagDetailView(generic.DetailView):
+    model = Tag
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['recipes'] = Recipe.objects.filter(tag=self.object)
+        return context

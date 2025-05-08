@@ -10,13 +10,11 @@
         <p>Prep time: {{ recipe.prep_time }} mins</p>
         <p>Cook time: {{ recipe.cook_time }} mins</p>
         <p>Servings: {{ recipe.servings }}</p>
-        {% if recipe.tag %}
         <ul class="flex gap-2">
             {% for tag in recipe.tag.all %}
-            <li class="px-4 text-center" style="background-color: {{ tag.color }}">{{ tag }}</li>
+            <a href="{{ tag.get_absolute_url }}"><li class="px-4 text-center" style="background-color: {{ tag.color }}">{{ tag }}</li></a>
             {% endfor %}
         </ul>
-        {% endif %}
         {% if recipe.url %}
         <p><a class="text-blue-500" href="{{ recipe.url }}">Original URL</a></p>
         {% endif %}

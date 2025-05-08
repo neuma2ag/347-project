@@ -4,7 +4,7 @@
 <h1 class="text-4xl">Tags</h1>
 <div class="flex gap-2 mt-4">
     {% for tag in tags %}
-    <p class="px-4 text-center" style="background-color: {{ tag.color }}">{{ tag }}</p>
+    <a href="{{ tag.get_absolute_url }}"><p class="px-4 text-center" style="background-color: {{ tag.color }}">{{ tag }}</p></a>
     {% endfor %}
 </div>
 {% endblock %}
