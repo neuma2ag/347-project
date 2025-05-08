@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 
 from .models import Tag, Recipe
@@ -27,7 +27,8 @@ def import_recipe(request):
     if request.method == 'POST':
         form = ImportRecipeForm(request.POST, user=request.user)
         if form.is_valid():
-            form.save()
+            recipe = form.save()
+            return redirect(recipe.get_absolute_url())
     else:
         form = ImportRecipeForm()
 

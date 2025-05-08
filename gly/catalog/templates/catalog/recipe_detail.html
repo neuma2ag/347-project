@@ -18,12 +18,13 @@
         </ul>
         {% endif %}
         {% if recipe.url %}
-        <a class="text-blue-500" href="{{ recipe.url }}">Original URL</a>
+        <p><a class="text-blue-500" href="{{ recipe.url }}">Original URL</a></p>
         {% endif %}
+
+        <button class="mt-4 bg-red-500 p-1"><a href="{% url 'recipe-delete' pk=recipe.pk %}">Delete</a></button>
     </div>
     <img src="{{ recipe.picture.url}}" />
 </div>
-
 
 <h2 class="text-3xl mt-4">Ingredients</h2>
 <ul class="list-disc">
