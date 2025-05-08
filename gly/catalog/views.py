@@ -41,3 +41,10 @@ def import_recipe(request):
 class RecipeDeleteView(generic.DeleteView):
     model = Recipe
     success_url = '/catalog'
+
+
+def tags(request):
+    context = {
+        'tags': Tag.objects.all()
+    }
+    return render(request, 'catalog/tags.html', context=context)

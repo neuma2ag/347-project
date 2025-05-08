@@ -4,7 +4,6 @@ from django.db.models.functions import Lower
 from django.core.files.base import ContentFile
 from django.urls import reverse
 from django.conf import settings
-from PIL import Image
 
 import random
 import requests
