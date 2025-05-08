@@ -18,10 +18,11 @@
     {% for recipe in recipes %}
     <a href="{{ recipe.get_absolute_url }}" <li>
         <p>{{ recipe }}</p>
+        <img src="{{ recipe.picture.url }}" />
         {% if recipe.tag %}
         <ul>
             {% for tag in recipe.tag.all %}
-            <p>{{ tag }}</p>
+            <p class="p-4" style="background-color: {{ tag.color }}">{{ tag }}</p>
             {% endfor %}
         </ul>
         {% endif %}

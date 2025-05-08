@@ -3,11 +3,21 @@ from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
 from django.urls import reverse
 from django.conf import settings
+import random
+
+
+def random_color():
+    color = random.randrange(0, 2**24)
+    color = hex(color)
+    color = "#" + color[2:]
+    return color
 
 
 class Tag(models.Model):
     name = models.CharField(max_length=32, unique=True,
                             help_text="Enter a tag for recipes")
+
+    color = models.CharField(max_length=7, default=random_color)
 
     def __str__(self):
         return self.name
@@ -47,6 +57,8 @@ class Recipe(models.Model):
 
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+
+    picture = models.ImageField(upload_to="images/", default="food.jpg")
 
     def __str__(self):
         return self.title
