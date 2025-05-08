@@ -1,18 +1,20 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1>Gordon Loves You!</h1>
+<h1 class="text-4xl">Gordon Loves You!</h1>
 <p>
     Welcome to Gordon Loves You, a website developed by
     <em>Andrew Gregory Neumann</em>!
 </p>
-<h2>GLY statistics</h2>
+
+<h2 class="mt-4 text-3xl">GLY statistics</h2>
 <ul>
     <li><strong>Recipes:</strong> {{ num_recipes }}</li>
     <li><strong>Tags:</strong> {{ num_tags }}</li>
 </ul>
+
 {% if recipes %}
-<ul>
+<ul class="mt-4">
     {% for recipe in recipes %}
     <a href="{{ recipe.get_absolute_url }}" <li>
         <p>{{ recipe }}</p>
