@@ -73,3 +73,8 @@ class TagUpdateView(generic.UpdateView):
 class TagDeleteView(generic.DeleteView):
     model = Tag
     success_url = '/catalog/tags'
+
+
+class TagCreateView(generic.CreateView):
+    model = Tag
+    fields = '__all__'
