@@ -43,6 +43,11 @@ class RecipeDeleteView(generic.DeleteView):
     success_url = '/catalog'
 
 
+class RecipeUpdateView(generic.UpdateView):
+    model = Recipe
+    fields = '__all__'
+
+
 def tags(request):
     context = {
         'tags': Tag.objects.all()

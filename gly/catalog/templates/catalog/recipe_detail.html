@@ -22,6 +22,7 @@
         {% endif %}
 
         <button class="mt-4 bg-red-500 p-1"><a href="{% url 'recipe-delete' pk=recipe.pk %}">Delete</a></button>
+        <button class="mt-4 bg-green-500 p-1"><a href="{% url 'recipe-update' pk=recipe.pk %}">Update</a></button>
     </div>
     <img src="{{ recipe.picture.url}}" />
 </div>

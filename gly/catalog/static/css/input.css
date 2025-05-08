@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 input {
-    @apply bg-white p-1;
+    @apply bg-white p-1 m-2 text-black;
 }
 
-label, span {
+label, span, select, option, td {
     @apply text-white;
 }
