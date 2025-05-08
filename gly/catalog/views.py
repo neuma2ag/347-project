@@ -22,6 +22,7 @@ def index(request):
 class RecipeDetailView(generic.DetailView):
     model = Recipe
 
+
 def import_recipe(request):
     if request.method == 'POST':
         form = ImportRecipeForm(request.POST, user=request.user)
@@ -34,3 +35,8 @@ def import_recipe(request):
         'form': form
     }
     return render(request, 'catalog/recipe_import.html', context=context)
+
+
+class RecipeDeleteView(generic.DeleteView):
+    model = Recipe
+    success_url = '/catalog'
