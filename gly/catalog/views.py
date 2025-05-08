@@ -22,7 +22,6 @@ def index(request):
 class RecipeDetailView(generic.DetailView):
     model = Recipe
 
-
 def import_recipe(request):
     if request.method == 'POST':
         form = ImportRecipeForm(request.POST, user=request.user)

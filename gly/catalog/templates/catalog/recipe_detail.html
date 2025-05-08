@@ -4,9 +4,11 @@
 <div class="grid grid-cols-2">
     <div>
         <h1 class="text-4xl">{{recipe}}</h1>
+        {% if recipe.creator %}
         <p>Creator: {{ recipe.creator }}</p>
-        <p>Prep time: {{ recipe.prep_time }}</p>
-        <p>Cook time: {{ recipe.cook_time }}</p>
+        {% endif %}
+        <p>Prep time: {{ recipe.prep_time }} mins</p>
+        <p>Cook time: {{ recipe.cook_time }} mins</p>
         <p>Servings: {{ recipe.servings }}</p>
         {% if recipe.tag %}
         <ul class="flex gap-2">
@@ -14,6 +16,9 @@
             <li class="px-4 text-center" style="background-color: {{ tag.color }}">{{ tag }}</li>
             {% endfor %}
         </ul>
+        {% endif %}
+        {% if recipe.url %}
+        <a class="text-blue-500" href="{{ recipe.url }}">Original URL</a>
         {% endif %}
     </div>
     <img src="{{ recipe.picture.url}}" />
