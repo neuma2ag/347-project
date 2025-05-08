@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+input {
+    @apply bg-white p-1;
+}
+
+label, span {
+    @apply text-white;
+}
