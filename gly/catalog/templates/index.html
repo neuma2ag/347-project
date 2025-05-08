@@ -14,18 +14,21 @@
 </ul>
 
 {% if recipes %}
-<ul class="mt-4">
+<ul class="mt-4 grid grid-cols-3 gap-4">
     {% for recipe in recipes %}
-    <a href="{{ recipe.get_absolute_url }}" <li>
-        <p>{{ recipe }}</p>
-        <img src="{{ recipe.picture.url }}" />
-        {% if recipe.tag %}
-        <ul>
-            {% for tag in recipe.tag.all %}
-            <p class="p-4" style="background-color: {{ tag.color }}">{{ tag }}</p>
-            {% endfor %}
-        </ul>
-        {% endif %}
+    <a href="{{ recipe.get_absolute_url }}"
+        <li class="grid grid-cols-[40%_60%] bg-black gap-2">
+            <div class="p-2">
+                <p class="text-xl">{{ recipe }}</p>
+                {% if recipe.tag %}
+                <ul class="grid grid-cols-2 gap-2">
+                    {% for tag in recipe.tag.all %}
+                    <p class="px-4 text-center" style="background-color: {{ tag.color }}">{{ tag }}</p>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <img src="{{ recipe.picture.url }}" />
         </li>
     </a>
     {% endfor %}
