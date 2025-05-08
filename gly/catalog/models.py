@@ -1,9 +1,14 @@
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
+from django.core.files.base import ContentFile
 from django.urls import reverse
 from django.conf import settings
+from PIL import Image
+
 import random
+import requests
+import os
 
 
 def random_color():
@@ -65,6 +70,17 @@ class Recipe(models.Model):
 
     def get_absolute_url(self):
         return reverse('recipe-detail', args=[str(self.id)])
+
+    def set_picture_from_url(self, url):
+        name = os.path.basename(url)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+        resp = requests.get(url, headers=headers)
+        print(resp.content)
+        content = ContentFile(resp.content)
+        self.picture.save(name, content)
+        self.save()
 
 
 class Instruction(models.Model):

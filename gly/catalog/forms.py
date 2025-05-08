@@ -60,6 +60,11 @@ class ImportRecipeForm(forms.Form):
         cleaned_data['ingredients'] = scraper.ingredients()
         cleaned_data['creator'] = self.user
 
+        image_url = None
+        if scraper.image():
+            image_url = scraper.image()
+        cleaned_data['image_url'] = image_url
+
         return cleaned_data
 
     def save(self):
@@ -80,4 +85,8 @@ class ImportRecipeForm(forms.Form):
             ingredient = Ingredient(content=ingredient, recipe=recipe)
             ingredient.save()
         recipe.tag.set(cleaned_data['tags'])
+
+        if cleaned_data['image_url']:
+            recipe.set_picture_from_url(cleaned_data['image_url'])
+
         return recipe
